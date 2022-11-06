@@ -1,5 +1,5 @@
 name: 'Docker on tmpfs'
-description: "Updates the runner's swap space, mounts a tmpfs on /var/lib/docker and restarts the daemon."
+description: "Updates the runner's swap space, mounts a tmpfs on /var/lib/docker/volumes and restarts the daemon."
 author: 'JonasAlfredsson'
 branding:
   icon: 'shuffle'
@@ -47,15 +47,15 @@ runs:
         echo
         sudo swapon --show
 
-    - name: Mount a tmpfs over /var/lib/docker
+    - name: Mount a tmpfs over /var/lib/docker/volumes
       shell: bash
       run: |
-        if [ ! -d "/var/lib/docker" ]; then
-          echo "Directory '/var/lib/docker' not found"
+        if [ ! -d "/var/lib/docker/volumes" ]; then
+          echo "Directory '/var/lib/docker/volumes' not found"
           exit 1
         fi
 
-        sudo mount -t tmpfs -o size=${{ inputs.tmpfs_size }}G tmpfs /var/lib/docker
+        sudo mount -t tmpfs -o size=${{ inputs.tmpfs_size }}G tmpfs /var/lib/docker/volumes
 
         sudo systemctl restart docker
 
