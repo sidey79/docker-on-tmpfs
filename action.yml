@@ -52,7 +52,7 @@ runs:
       run: |
         if [ ! -d "/var/lib/docker/volumes" ]; then
           echo "Directory '/var/lib/docker/' not found"
-          mkdir -p /var/lib/docker/volumes
+          sudo mkdir -p /var/lib/docker/volumes
           exit 1
         fi
 
